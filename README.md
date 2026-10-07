@@ -1,7 +1,7 @@
-# About
+## About
 A chess game built from scratch using Python and Raylib.
 
-## Tech Stack
+### Tech Stack
 
 - Python
 - Raylib / pyray
