@@ -213,13 +213,15 @@ def main():
 
     ray.init_window(720, 720, "Chess")
 
+    pieces_path = Path(__file__).parent / "Pieces"
+
     black_textures = [
-        ray.load_texture(f"Chess_template\\Pieces//{piece}")
+        ray.load_texture(str(pieces_path / piece))
         for piece in black_pieces
     ]
 
     white_textures = [
-        ray.load_texture(f"Chess_template\\Pieces//{piece}")
+        ray.load_texture(str(pieces_path / piece))
         for piece in white_pieces
     ]
 
@@ -237,7 +239,6 @@ def main():
 
             position = (row, col)
 
-            # Move selected piece
             if selected_position is not None and position in moves:
 
                 selected_index = selected_position[0] * 8 + selected_position[1]
@@ -249,7 +250,6 @@ def main():
                 selected_position = None
                 moves = []
 
-            # Select a piece
             else:
                 selected_piece = get_piece(board_state, position)
 
