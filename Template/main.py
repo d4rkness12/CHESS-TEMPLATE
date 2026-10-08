@@ -227,6 +227,7 @@ def main():
 
     selected_position = None
     moves = []
+    turn = "white"
 
     while not ray.window_should_close():
 
@@ -239,8 +240,15 @@ def main():
 
             position = (row, col)
 
-            if selected_position is not None and position in moves:
+            if selected_position is None:
+                piece_color = get_color(board_state, position)
 
+                if piece_color == turn:
+                    selected_position = position
+                    moves = get_valid_moves(board_state, position)
+
+            # Moving a selected piece
+            elif position in moves:
                 selected_index = selected_position[0] * 8 + selected_position[1]
                 destination_index = position[0] * 8 + position[1]
 
@@ -250,15 +258,16 @@ def main():
                 selected_position = None
                 moves = []
 
-            else:
-                selected_piece = get_piece(board_state, position)
-
-                if selected_piece is not None:
-                    selected_position = position
-                    moves = get_valid_moves(board_state, position)
+                # Switch turns
+                if turn == "white":
+                    turn = "black"
                 else:
-                    selected_position = None
-                    moves = []
+                    turn = "white"
+
+            # Clicked somewhere that isn't a valid move
+            else:
+                selected_position = None
+                moves = []
 
         ray.begin_drawing()
         ray.clear_background(ray.WHITE)
